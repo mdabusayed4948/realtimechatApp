@@ -1,0 +1,23 @@
+
+
+	        Technologies Used
+=====================================================
+	1. Pusher (As Real time partner)
+	2. Laravel (As BakEnd Partner)
+	3. Vuejs (As Javascript Partner)
+	4. Vuetify (As Material FrontEnd Partner)
+	5. Vue-Router
+	6. IWT (As Stateless Authentication Partner)
+	7. Markdown Editor
+
+ 		What we Build
+=====================================================
+	1. A Single Page App
+	2. Discussion Forum
+
+
+	What is Real Time Here
+=====================================================
+	1. Notifacions
+	2. Like/Dislikes
+	3. New Reply
