@@ -7,6 +7,19 @@ use App\User;
 
 class Question extends Model
 {
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+//    protected $fillable = [
+//        'title', 'slug', 'body', 'category_id', 'user_id',
+//    ];
+
+    // use for store huge data
+    protected $guarded = [];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -14,11 +27,16 @@ class Question extends Model
 
     public function replies()
     {
-       return $this->hasMany(Reply::class); 
+       return $this->hasMany(Reply::class);
     }
 
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function getPathAttribute()
+    {
+        return asset("api/question/$this->slug");
     }
 }
