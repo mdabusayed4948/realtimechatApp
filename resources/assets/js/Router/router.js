@@ -4,16 +4,40 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 import Login from "../components/login/Login";
-import signup from "../components/login/signup";
-import forum from "../components/forum/forum";
+import Singup from "../components/login/signup";
+import Forum from "../components/forum/forum";
+import Read from "../components/forum/read";
+import Create from "../components/forum/create";
 import Logout from "../components/login/Logout";
 
 
 const routes = [
-    { path: '/login', component: Login },
-    { path: '/logout', component: Logout },
-    { path: '/signup', component: signup },
-    { path: '/forum', component: forum, name: 'forum'},
+    {
+        path: '/login',
+        component: Login
+    },
+    {
+        path: '/logout',
+        component: Logout
+    },
+    {
+        path: '/signup',
+        component: Singup
+    },
+    {
+        path: '/forum',
+        component: Forum,
+        name: 'forum'
+    },
+    {
+        path: '/ask',
+        component: Create
+    },
+    {
+        path: '/question/:slug',
+        component: Read,
+        name: 'read'
+    },
 ]
 
 
