@@ -25,7 +25,8 @@ class Question extends Model
 //    ];
 
     // use for store huge data
-    protected $guarded = [];
+//    protected $guarded = [];
+    protected $fillable = ['title','slug','body','user_id','category_id'];
 
     public function user()
     {
