@@ -9,6 +9,7 @@ import Forum from "../components/forum/forum";
 import Read from "../components/forum/read";
 import Create from "../components/forum/create";
 import Logout from "../components/login/Logout";
+import CreateCategory from "../components/category/CreateCategory";
 
 
 const routes = [
@@ -23,6 +24,10 @@ const routes = [
     {
         path: '/signup',
         component: Singup
+    },
+    {
+        path: '/category',
+        component: CreateCategory
     },
     {
         path: '/forum',
