@@ -7,7 +7,7 @@
                required
            ></v-text-field>
 
-           <v-btn type="submit" color="teal"><v-icon color="blue-grey darken-4">save</v-icon> Create</v-btn>
+           <v-btn type="submit" color="teal">Create</v-btn>
 
        </v-form>
 
@@ -16,14 +16,13 @@
                 <v-toolbar-title>Categories</v-toolbar-title>
             </v-toolbar>
 
-
                 <div v-for="category in categories" :key="category.id" >
                     <v-toolbar dense>
                         <v-list-tile-content>
 
-                            <v-list-title-title>
+                            <v-list-tile-title>
                                 {{ category.name }}
-                            </v-list-title-title>
+                            </v-list-tile-title>
                         </v-list-tile-content>
                         <v-list-tile-action>
                             <v-btn icon small>
@@ -31,10 +30,11 @@
                             </v-btn>
                         </v-list-tile-action>
                         <v-list-tile-action>
-                            <v-btn icon small>
+                            <v-btn icon small @click="destroy(category.slug,index)">
                                 <v-icon color="red">delete</v-icon>
                             </v-btn>
                         </v-list-tile-action>
+
                     </v-toolbar>
                     <v-divider></v-divider>
                 </div>
@@ -51,18 +51,27 @@ export default {
             form: {
                 name: null
             },
-            categories:{}
+            categories:{},
         }
     },
     created() {
         axios.get('/api/category')
-            .then(res => this.categories = res.data.data)
+        .then(res => this.categories = res.data.data)
     },
     methods:{
         submit(){
-            axios.post("/api/category", this.form)
-            .then(res => console.log(res.data))
-        }
+            axios.post('/api/category',this.form)
+                .then(res => {
+                    this.categories.unshift(res.data)
+                    this.form.name = null
+                })
+                .catch(error => (this.errors = error.response.data.errors));
+        },
+        destroy(slug, index) {
+            axios
+                .delete(`/api/category/${slug}`)
+                .then(res => this.categories.splice(index, 1));
+        },
     }
 }
 </script>
