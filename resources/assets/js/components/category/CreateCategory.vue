@@ -1,22 +1,23 @@
 <template>
     <v-container>
-       <v-form @submit.prevent="submit">
-           <v-text-field
-               label="Category Name"
-               v-model="form.name"
-               required
-           ></v-text-field>
 
-           <v-btn type="submit" color="teal">Create</v-btn>
+        <v-form @submit.prevent="submit">
+            <v-text-field
+                label="Category Name"
+                v-model="form.name"
+                required
+            ></v-text-field>
+
+           <v-btn type="submit" color="blue" v-if="editSlug">Update</v-btn>
+           <v-btn type="submit" color="teal" v-else>Create</v-btn>
 
        </v-form>
-
         <v-card>
             <v-toolbar color="indigo" dark dense>
                 <v-toolbar-title>Categories</v-toolbar-title>
             </v-toolbar>
 
-                <div v-for="category in categories" :key="category.id" >
+            <div v-for="(category,index) in categories" :key="category.id"  class="mt-1">
                     <v-toolbar dense>
                         <v-list-tile-content>
 
@@ -25,7 +26,7 @@
                             </v-list-tile-title>
                         </v-list-tile-content>
                         <v-list-tile-action>
-                            <v-btn icon small>
+                            <v-btn icon small @click="edit(index)">
                                 <v-icon color="orange">edit</v-icon>
                             </v-btn>
                         </v-list-tile-action>
@@ -36,15 +37,16 @@
                         </v-list-tile-action>
 
                     </v-toolbar>
-                    <v-divider></v-divider>
                 </div>
-
         </v-card>
 
     </v-container>
+
 </template>
 
 <script>
+import create from "../forum/create";
+
 export default {
     data(){
         return {
@@ -52,26 +54,48 @@ export default {
                 name: null
             },
             categories:{},
+            editSlug:null
         }
     },
     created() {
+        if (!User.admin()){
+            this.$router.push("/forum");
+        }
         axios.get('/api/category')
         .then(res => this.categories = res.data.data)
     },
     methods:{
+
         submit(){
-            axios.post('/api/category',this.form)
+            this.editSlug ? this.update() : this.create();
+        },
+        update(){
+            axios
+                .patch(`/api/category/${this.editSlug}`, this.form)
                 .then(res => {
-                    this.categories.unshift(res.data)
-                    this.form.name = null
+                    this.categories.unshift(res.data);
+                    this.form.name = null;
+                })
+        },
+        create() {
+            axios
+                .post("/api/category", this.form)
+                .then(res => {
+                    this.categories.unshift(res.data);
+                    this.form.name = null;
                 })
                 .catch(error => (this.errors = error.response.data.errors));
         },
-        destroy(slug, index) {
+        destroy(slug,index) {
             axios
                 .delete(`/api/category/${slug}`)
-                .then(res => this.categories.splice(index, 1));
+                .then(res => this.categories.splice(index,1));
         },
+        edit(index){
+            this.form.name = this.categories[index].name;
+            this.editSlug = this.categories[index].slug;
+            this.categories.splice(index,1);
+        }
     }
 }
 </script>

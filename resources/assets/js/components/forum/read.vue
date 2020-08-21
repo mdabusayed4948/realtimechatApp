@@ -10,14 +10,17 @@
             :data=question
         ></show-question>
 
+        <replies :replies="question.replies"></replies>
+
     </div>
 </template>
 
 <script>
     import ShowQuestion from './ShowQuestion'
     import EditQuestion from './editQuestion'
+    import Replies from "../reply/replies";
 export default {
-    components: {ShowQuestion, EditQuestion },
+    components: {Replies, ShowQuestion, EditQuestion },
     data(){
         return{
             question:null,
