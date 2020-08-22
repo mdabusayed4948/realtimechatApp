@@ -10,7 +10,11 @@
             :data=question
         ></show-question>
 
-        <replies :replies="question.replies"></replies>
+        <v-container>
+            <replies :replies="question.replies"></replies>
+
+            <new-reply :questionSlug="question.slug"></new-reply>
+        </v-container>
 
     </div>
 </template>
@@ -19,8 +23,9 @@
     import ShowQuestion from './ShowQuestion'
     import EditQuestion from './editQuestion'
     import Replies from "../reply/replies";
+    import NewReply from "../reply/newReply";
 export default {
-    components: {Replies, ShowQuestion, EditQuestion },
+    components: {NewReply, Replies, ShowQuestion, EditQuestion },
     data(){
         return{
             question:null,
