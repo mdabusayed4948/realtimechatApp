@@ -1,9 +1,9 @@
 <template>
     <div>
         <reply
-            v-for="reply in content"
+            v-for="(reply,index) in content"
             :key="reply.id"
-            v-if="replies"
+            :index=index
             :data="reply"
         ></reply>
     </div>
@@ -12,10 +12,10 @@
 <script>
 import Reply from './reply'
 export default {
-    props:['replies'],
+    props:['question'],
     data(){
         return{
-            content:this.replies
+            content:this.question.replies
         }
     },
     components:{Reply},
@@ -26,6 +26,12 @@ export default {
         listen(){
             EventBus.$on('newReply',(reply) => {
                 this.content.unshift(reply)
+            })
+            EventBus.$on('deleteReply',(index) => {
+                axios.delete(`/api/question/${this.question.slug}/reply/${this.content[index].id}`)
+                .then(res => {
+                    this.content.splice(index,1)
+                })
             })
         }
     }
