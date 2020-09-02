@@ -1,6 +1,6 @@
 <template>
-    <v-container>
 
+    <v-container>
         <v-form @submit.prevent="submit">
             <v-text-field
                 label="Category Name"
@@ -26,14 +26,20 @@
                             </v-list-tile-title>
                         </v-list-tile-content>
                         <v-list-tile-action>
-                            <v-btn icon small @click="edit(index)">
-                                <v-icon color="orange">edit</v-icon>
-                            </v-btn>
+                            <v-tooltip top>
+                                <v-btn  icon small @click="edit(index)" slot="activator" dark>
+                                    <v-icon color="orange">edit</v-icon>
+                                </v-btn>
+                                <span>Edit</span>
+                            </v-tooltip>
                         </v-list-tile-action>
                         <v-list-tile-action>
-                            <v-btn icon small @click="destroy(category.slug,index)">
-                                <v-icon color="red">delete</v-icon>
-                            </v-btn>
+                            <v-tooltip top>
+                                <v-btn icon small @click="destroy(category.slug,index)" slot="activator" dark >
+                                    <v-icon color="red">delete</v-icon>
+                                </v-btn>
+                                <span>Delete</span>
+                            </v-tooltip>
                         </v-list-tile-action>
 
                     </v-toolbar>

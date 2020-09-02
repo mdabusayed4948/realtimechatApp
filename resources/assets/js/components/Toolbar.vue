@@ -1,9 +1,12 @@
 <template>
-    <v-toolbar>
+    <v-toolbar color="indigo" dark>
 <!--        <v-toolbar-side-icon></v-toolbar-side-icon>-->
-        <v-toolbar-title>Pro-Sayed</v-toolbar-title>
+        <v-toolbar-title>
+            <router-link class="white--text" to="/">ProSayed</router-link>
+        </v-toolbar-title>
 
         <v-spacer></v-spacer>
+        <app-notification v-if="loggedIn"></app-notification>
 
         <div class="hidden-sm-and-down">
 
@@ -21,9 +24,12 @@
 </template>
 
 <script>
+import AppNotification from "./AppNotification";
     export default {
+        components:{AppNotification},
         data(){
             return {
+                loggedIn: User.loggedIn(),
                 items: [
                     {title : 'Forum', to:'/forum',show:true},
                     {title : 'Ask Question', to:'/ask',show: User.loggedIn()},
