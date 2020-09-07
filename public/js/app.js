@@ -28903,6 +28903,8 @@ window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo__["a" /* default */](
     key: "ca7dacf926f470ec3a44",
     cluster: "ap2",
     encrypted: true,
+    // forceTLS: false, //<<<<=====CHANGE THIS
+    // enabledTransports: ['ws', 'wss'],
     auth: {
         headers: {
             Authorization: JwtToken
@@ -97290,7 +97292,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -97344,6 +97346,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             Echo.private('App.User.' + User.id()).notification(function (notification) {
                 _this.content.unshift(notification.reply);
+            });
+
+            Echo.channel('deleteReplyChannel').listen('DeleteReplyEvent', function (e) {
+                //console.log(e)
+                for (var index = 0; index < _this.content.length; index++) {
+                    if (_this.content[index].id == e.id) {
+                        _this.content.splice(index, 1);
+                    }
+                }
             });
         }
     }
@@ -97791,7 +97802,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -97829,7 +97840,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this = this;
 
         Echo.channel('likeChannel').listen('LikeEvent', function (e) {
-            //console.log(e);
             if (_this.content.id == e.id) {
                 e.type == 1 ? _this.count++ : _this.count--;
             }

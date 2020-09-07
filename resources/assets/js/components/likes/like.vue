@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-btn icon @click="likeIt">
-            <v-icon :color="color">favorite</v-icon> {{ count }}
+            <v-icon :color="color">favorite</v-icon> {{count}}
         </v-btn>
     </div>
 </template>
@@ -23,9 +23,8 @@ export default {
     created() {
         Echo.channel('likeChannel')
             .listen('LikeEvent', (e) => {
-                //console.log(e);
                 if(this.content.id == e.id){
-                    e.type == 1 ? this.count ++ : this.count --
+                    e.type== 1? this.count ++ : this.count --
                 }
             });
     },

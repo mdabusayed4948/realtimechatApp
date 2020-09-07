@@ -54,6 +54,8 @@ window.Echo = new Echo({
     key: "ca7dacf926f470ec3a44",
     cluster: "ap2",
     encrypted: true,
+    // forceTLS: false, //<<<<=====CHANGE THIS
+    // enabledTransports: ['ws', 'wss'],
     auth:{
         headers:{
              Authorization : JwtToken

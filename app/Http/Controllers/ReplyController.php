@@ -44,7 +44,8 @@ class ReplyController extends Controller
     {
         $reply = $question->replies()->create($request->all());
         $user = $question->user;
-        if ($reply->user_id !== $question->user_id) {
+
+        if($reply->user_id !== $question->user_id) {
             $user->notify(new NewReplyNotification($reply));
         }
         return response(['reply' => new ReplyResource($reply)], Response::HTTP_CREATED);
@@ -84,6 +85,7 @@ class ReplyController extends Controller
     public function destroy(Question $question, Reply $reply)
     {
         $reply->delete();
+        broadcast(new DeleteReplyEvent($reply->id))->toOthers();
         return response(null,Response::HTTP_NO_CONTENT);
     }
 }
