@@ -7,8 +7,7 @@ class Exception{
 
     isExipred(error){
         if(error == 'Token is expired' || error == 'Token is invalid'){
-
-            window.reload(User.logout());
+            User.logout();
         }
     }
 }
