@@ -26,7 +26,8 @@ export default {
         return {
             read: {},
             unread: {},
-            unreadCount: 0
+            unreadCount: 0,
+            sound: "http://soundbible.com/mp3/sms-alert-4-daniel_simon.mp3"
         };
     },
     created() {
@@ -35,11 +36,16 @@ export default {
         }
         Echo.private('App.User.' + User.id())
             .notification((notification) => {
-                this.unread.unshift(notification)
+                this.playSound();
+                this.unread.unshift(notification);
                 this.unreadCount++
             });
     },
     methods: {
+        playSound() {
+            let alert = new Audio(this.sound);
+            alert.play();
+        },
         getNotifications() {
             axios
                 .post("/api/notifications")
