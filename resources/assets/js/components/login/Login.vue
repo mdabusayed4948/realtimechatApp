@@ -20,6 +20,7 @@
             <v-btn
                 color="green"
                 type="submit"
+                :disabled="disabled"
             >Login</v-btn>
 
             <router-link to="/signup">
@@ -51,6 +52,12 @@
             login(){
                 // alert("login");
                 User.login(this.form)
+            }
+
+        },
+        computed:{
+            disabled(){
+                return !(this.form.email && this.form.password);
             }
         }
 
